@@ -10,8 +10,8 @@ const ArticleSchema = new Schema({
     summary: {
         type: String,
     },
-    URL: {
-        type: String
+    url: {
+        type: String,
     },
 });
 
