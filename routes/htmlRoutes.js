@@ -1,5 +1,16 @@
+const db = require("../models");
+
 module.exports = (app) => {
     app.get("/", (req, res) => {
-        res.send("hello world!");
+        db.Article.find({})
+            .then((data) => {
+                console.log(data);
+                res.render("index", {
+                    articles: data,
+                });
+            })
+            .catch((err) => {
+                res.json(err);
+            });
     });
 };

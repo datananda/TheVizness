@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 
-const db = require("./models");
-
 const PORT = process.env.PORT || 8000;
 const app = express();
 
