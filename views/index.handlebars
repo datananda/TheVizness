@@ -77,4 +77,51 @@
         </div>
         {{/each}}
     </div>
+    <div class="columns">
+        <div class="column">
+            <ul class="pagination">
+                {{#if pagination.firstPage.isCurrentPage}}
+                <li class="page-item disabled">
+                    <a href="#" tabindex="-1">First</a>
+                </li>
+                <li class="page-item disabled">
+                    <a href="#">Previous</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                    <a href="/page/1" tabindex="-1">First</a>
+                </li>
+                <li class="page-item">
+                    <a href="/page/{{pagination.prevPage.id}}">Previous</a>
+                </li>
+                {{/if}}
+                {{#each pagination.pages}}
+                {{#if isCurrentPage}}
+                <li class="page-item active">
+                    <a href="/page/{{pageNumber}}">{{pageNumber}}</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                    <a href="/page/{{pageNumber}}">{{pageNumber}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+                {{#if pagination.lastPage.isCurrentPage}}
+                <li class="page-item disabled">
+                    <a href="#">Next</a>
+                </li>
+                <li class="page-item disabled">
+                    <a href="#">Last</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                    <a href="/page/{{pagination.nextPage.id}}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a href="/page/{{pagination.lastPage.id}}">Last</a>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
 </div>
