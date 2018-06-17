@@ -15,5 +15,6 @@ module.exports = {
         "no-plusplus": [0],
         "no-lonely-if": [0],
         "prefer-promise-reject-errors": [0],
+        "no-underscore-dangle": [0],
     }
 };

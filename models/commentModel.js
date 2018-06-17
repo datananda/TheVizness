@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
     comment: {
         type: String,
-        required: "article headline is required",
+        required: "comment text is required",
     },
     date: {
         type: Date,

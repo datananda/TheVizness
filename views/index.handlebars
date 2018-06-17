@@ -1,9 +1,3 @@
-{{!-- {{#each articles}}
-<h1>
-    <a href="{{url}}">{{headline}}</a>
-</h1>
-<p>{{summary}}</p>
-<br> {{/each}} --}}
 <div class="container">
     <div class="columns">
         <div class="column">
@@ -13,15 +7,10 @@
     <div class="columns">
         {{#each articles}}
         <div class="column col-sm-12 col-4">
-            <div class="card">
-                {{!--
-                <div class="card-image">
-                    <img src="img/osx-el-capitan.jpg" class="img-responsive">
-                </div> --}}
-
-                <div class="card-header">
+            <div class="card my-2">
+                <div class="card-header text-dark">
                     <a href="{{url}}">
-                        <div class="card-title h5">{{headline}}</div>
+                        <div class="card-title mb-1">{{headline}}</div>
                     </a>
                     <div class="tile tile-centered">
                         <div class="tile-icon">
@@ -34,16 +23,55 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body mb-2">
                     {{summary}}
                 </div>
-                <div class="card-footer">
-                    <button class="btn">
+                <div class="divider"></div>
+                <div class="card-footer" data-id="{{_id}}">
+                    <button class="btn btn-action bookmark-btn">
                         <i class="icon icon-bookmark"></i>
                     </button>
-                    <button class="btn badge" data-badge="8">
+                    <button class="btn btn-action badge comments-btn" data-badge="{{numComments}}">
                         <i class="icon icon-message"></i>
                     </button>
+                </div>
+            </div>
+            <div class="modal" data-id="{{_id}}">
+                <a href="/" class="modal-overlay" aria-label="Close"></a>
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <a href="/" class="btn btn-clear float-right" aria-label="Close"></a>
+                        <div>Comment on</div>
+                        <div class="modal-title h5 text-ellipsis">{{headline}}</div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content">
+                            {{#each comments}}
+                            <div class="divider"></div>
+                            <div class="tile my-2">
+                                <div class="tile-icon">
+                                    <i class="icon icon-message"></i>
+                                </div>
+                                <div class="tile-content">
+                                    <p class="my-1 tile-title text-gray">{{formattedDate}}</p>
+                                    <p class="mb-1 tile-subtitle">{{comment}}</p>
+                                </div>
+                                <div class="tile-action">
+                                    <button class="btn btn-action delete-comment-btn" data-id="{{_id}}">
+                                        <i class="icon icon-delete"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="input-group">
+                            <input class="form-input" type="text" placeholder="Write a comment...">
+                            <button class="btn btn-primary input-group-btn submit-comment-btn">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

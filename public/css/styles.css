@@ -1,0 +1,39 @@
+.card-title,
+.modal-title {
+    color: #454d5d;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.card-title {
+    height: 61px;
+    overflow: hidden;
+}
+
+.card-body {
+    height: 89px;
+    overflow: hidden;
+    font-size: 0.75rem;
+    font-weight: 300;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.divider {
+    margin: 0;
+}
+
+.btn {
+    color: #454d5d;
+    border-color: #454d5d;
+}
+
+.btn.btn-clear {
+    line-height: 1.25rem;
+}
+
+.badge[data-badge]::after {
+    font-size: .6rem;
+}

@@ -20,9 +20,7 @@ module.exports = (app) => {
                     .then((existingDoc) => {
                         if (!existingDoc) {
                             db.Article.create(newData)
-                                .then((newDoc) => {
-                                    console.log(newDoc);
-                                })
+                                .then(newArticle => console.log(newArticle))
                                 .catch(dbErr => res.json(dbErr));
                         }
                     })
@@ -30,5 +28,26 @@ module.exports = (app) => {
             });
         });
         res.send("Done");
+    });
+
+    app.post("/articles/:id", (req, res) => {
+        db.Comment.create(req.body)
+            .then(newComment => db.Article.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { comments: newComment._id } },
+                { new: true },
+            ).populate({ path: "comments", options: { sort: { date: -1 } } }))
+            .then(updatedArticle => res.json(updatedArticle))
+            .catch(dbErr => res.json(dbErr));
+    });
+
+    app.delete("/articles/:articleId/comments/:commentId", (req, res) => {
+        db.Comment.findByIdAndRemove(req.params.commentId)
+            .then(deletedComment => db.Article.findByIdAndUpdate(
+                req.params.articleId,
+                { $pull: { comments: deletedComment._id } },
+            ).populate({ path: "comments", options: { sort: { date: -1 } } }))
+            .then(updatedArticle => res.json(updatedArticle))
+            .catch(dbErr => res.json(dbErr));
     });
 };
