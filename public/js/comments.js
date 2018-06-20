@@ -16,6 +16,19 @@ $(".bookmark-btn").on("click", function () {
     localStorage.setItem("vizBookmarks", JSON.stringify(vizBookmarks));
 });
 
+$(".all-bookmarks-btn").on("click", () => {
+    console.log("clicked");
+    const data = {
+        bookmarks: JSON.parse(localStorage.getItem("vizBookmarks")),
+    };
+    $.post({
+        url: "/bookmarks",
+        data,
+    }).then((result) => {
+        console.log(result);
+    });
+});
+
 $(".delete-comment-btn").on("click", function () {
     const articleId = $(this).closest(".modal").data("id");
     const commentId = $(this).data("id");

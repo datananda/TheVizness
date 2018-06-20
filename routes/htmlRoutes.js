@@ -21,6 +21,32 @@ module.exports = (app) => {
     //         })
     //         .catch(err => res.json(err));
     // });
+    app.post("/bookmarks", (req, res) => {
+        // console.log(req.body);
+        console.log(req.body);
+        const bookmarks = req.body.bookmarks;
+        console.log(bookmarks);
+        db.Article.find({ _id: { $in: bookmarks } })
+            .populate("comments")
+            .then((data) => {
+                const articles = data.map((article) => {
+                    const formattedArticle = article;
+                    formattedArticle.numComments = article.comments.length;
+                    const formattedComments = article.comments.map((comment) => {
+                        const formattedComment = comment;
+                        formattedComment.formattedDate = moment(comment.date).format("MMM D, YYYY [at] h:mm a");
+                        return formattedComment;
+                    });
+                    formattedArticle.comments = formattedComments;
+                    return article;
+                });
+                console.log(articles);
+                res.json("hello world");
+                // res.render("index", {
+                //     articles,
+                // });
+            });
+    });
 
     app.get("/page/:page", (req, res) => {
         const perPage = 9;
