@@ -1,12 +1,7 @@
 <div class="container">
     <div class="columns">
-        <div class="column">
-            <h1>Data Viz News</h1>
-        </div>
-    </div>
-    <div class="columns">
         {{#each articles}}
-        <div class="column col-sm-12 col-4">
+        <div class="column col-sm-12 col-4 article">
             <div class="card my-2">
                 <div class="card-header text-dark">
                     <a href="{{url}}">
@@ -77,6 +72,7 @@
         </div>
         {{/each}}
     </div>
+    {{#if pagination}}
     <div class="columns">
         <div class="column">
             <ul class="pagination">
@@ -89,20 +85,20 @@
                 </li>
                 {{else}}
                 <li class="page-item">
-                    <a href="/page/1" tabindex="-1">First</a>
+                    <a href="/page?p=1" tabindex="-1">First</a>
                 </li>
                 <li class="page-item">
-                    <a href="/page/{{pagination.prevPage.id}}">Previous</a>
+                    <a href="/page?p={{pagination.prevPage.id}}">Previous</a>
                 </li>
                 {{/if}}
                 {{#each pagination.pages}}
                 {{#if isCurrentPage}}
                 <li class="page-item active">
-                    <a href="/page/{{pageNumber}}">{{pageNumber}}</a>
+                    <a href="/page?p={{pageNumber}}">{{pageNumber}}</a>
                 </li>
                 {{else}}
                 <li class="page-item">
-                    <a href="/page/{{pageNumber}}">{{pageNumber}}</a>
+                    <a href="/page?p={{pageNumber}}">{{pageNumber}}</a>
                 </li>
                 {{/if}}
                 {{/each}}
@@ -115,13 +111,14 @@
                 </li>
                 {{else}}
                 <li class="page-item">
-                    <a href="/page/{{pagination.nextPage.id}}">Next</a>
+                    <a href="/page?p={{pagination.nextPage.id}}">Next</a>
                 </li>
                 <li class="page-item">
-                    <a href="/page/{{pagination.lastPage.id}}">Last</a>
+                    <a href="/page?p={{pagination.lastPage.id}}">Last</a>
                 </li>
                 {{/if}}
             </ul>
         </div>
     </div>
+    {{/if}}
 </div>

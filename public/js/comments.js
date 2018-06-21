@@ -16,18 +16,23 @@ $(".bookmark-btn").on("click", function () {
     localStorage.setItem("vizBookmarks", JSON.stringify(vizBookmarks));
 });
 
-$(".all-bookmarks-btn").on("click", () => {
-    console.log("clicked");
-    const data = {
-        bookmarks: JSON.parse(localStorage.getItem("vizBookmarks")),
-    };
-    $.post({
-        url: "/bookmarks",
-        data,
-    }).then((result) => {
-        console.log(result);
-    });
-});
+// $(".all-bookmarks-btn").on("click", () => {
+    // console.log("clicked");
+    // const data = {
+    //     bookmarks: JSON.parse(localStorage.getItem("vizBookmarks")),
+    // };
+    // $.post({
+    //     url: "/bookmarks",
+    //     data,
+    // }).then((result) => {
+    //     console.log(result);
+    // });
+    // $.get({
+    //     url: "/bookmarks",
+    // }).then((result) => {
+
+    // })
+// });
 
 $(".delete-comment-btn").on("click", function () {
     const articleId = $(this).closest(".modal").data("id");
@@ -80,10 +85,12 @@ $(() => {
             $(`.card-footer[data-id='${articleId}']`).children(".bookmark-btn").addClass("btn-primary");
         });
     }
-    // $(".card-title").dotdotdot({
-    //     watch: true,
-    // });
-    // $(".card-body").dotdotdot({
-    //     watch: true,
-    // });
+
+    const vizBookmarks = JSON.parse(localStorage.getItem("vizBookmarks"));
+    $(".article").each(function () {
+        const cardId = $(this).find(".card-footer").data("id");
+        if (!vizBookmarks.includes(cardId)) {
+            $(this).remove();
+        }
+    });
 });

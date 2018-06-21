@@ -2,25 +2,8 @@ const db = require("../models");
 const moment = require("moment");
 
 module.exports = (app) => {
-    // app.get("/", (req, res) => {
-    //     db.Article.find({})
-    //         .populate({ path: "comments", options: { sort: { date: -1 } } })
-    //         .then((data) => {
-    //             const formattedData = data.map((article) => {
-    //                 const formattedArticle = article;
-    //                 formattedArticle.numComments = article.comments.length;
-    //                 const formattedComments = article.comments.map((comment) => {
-    //                     const formattedComment = comment;
-    //                     formattedComment.formattedDate = moment(comment.date).format("MMM D, YYYY [at] h:mm a");
-    //                     return formattedComment;
-    //                 });
-    //                 formattedArticle.comments = formattedComments;
-    //                 return article;
-    //             });
-    //             res.render("index", { articles: formattedData });
-    //         })
-    //         .catch(err => res.json(err));
-    // });
+    app.get("/", (req, res) => res.redirect("/page?p=1"));
+
     app.post("/bookmarks", (req, res) => {
         // console.log(req.body);
         console.log(req.body);
@@ -48,9 +31,32 @@ module.exports = (app) => {
             });
     });
 
-    app.get("/page/:page", (req, res) => {
+    app.get("/bookmarks", (req, res) => {
+        db.Article.find({})
+            .populate({ path: "comments", options: { sort: { date: -1 } } })
+            .then((data) => {
+                const articles = data.map((article) => {
+                    const formattedArticle = article;
+                    formattedArticle.numComments = article.comments.length;
+                    const formattedComments = article.comments.map((comment) => {
+                        const formattedComment = comment;
+                        formattedComment.formattedDate = moment(comment.date).format("MMM D, YYYY [at] h:mm a");
+                        return formattedComment;
+                    });
+                    formattedArticle.comments = formattedComments;
+                    return article;
+                });
+                res.render("index", {
+                    articles,
+                });
+            })
+            .catch(dbErr => res.json(dbErr));
+    });
+
+    app.get("/page", (req, res) => {
         const perPage = 9;
-        const page = parseInt(req.params.page, 10);
+        const pageNumString = req.query.p || "1"
+        const page = parseInt(pageNumString, 10);
         db.Article.find({})
             .skip((perPage * page) - perPage)
             .limit(perPage)
