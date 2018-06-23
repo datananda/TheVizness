@@ -30,9 +30,15 @@
                     <button class="btn btn-action bookmark-btn">
                         <i class="icon icon-bookmark"></i>
                     </button>
+                    {{#if comments}}
                     <button class="btn btn-action badge comments-btn" data-badge="{{numComments}}">
                         <i class="icon icon-message"></i>
                     </button>
+                    {{else}}
+                    <button class="btn btn-action comments-btn">
+                        <i class="icon icon-message"></i>
+                    </button>
+                    {{/if}}
                 </div>
             </div>
             <div class="modal" data-id="{{_id}}">

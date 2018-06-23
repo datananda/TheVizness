@@ -16,7 +16,7 @@ $(".bookmark-btn").on("click", function () {
     localStorage.setItem("vizBookmarks", JSON.stringify(vizBookmarks));
 });
 
-$(".delete-comment-btn").on("click", function () {
+$(".modal-container").on("click", ".delete-comment-btn", function () {
     const articleId = $(this).closest(".modal").data("id");
     const commentId = $(this).data("id");
     const commentToDelete = $(this).closest(".tile");
@@ -51,7 +51,7 @@ $(".submit-comment-btn").on("click", function () {
             tileContent.append($("<p class='my-1 tile-title text-gray'>").text(commentDate));
             tileContent.append($("<p class='mb-1 title-subtitle'>").text(newComment.comment));
             newTile.append(tileContent);
-            const tileAction = $("<div class='tile-action'>").append($(`<button class='btn btn-action delete-comment-btn' data-id='${comment._id}'>`).append($("<i class='icon icon-delete'>")));
+            const tileAction = $("<div class='tile-action'>").append($(`<button class='btn btn-action delete-comment-btn' data-id='${newComment._id}'>`).append($("<i class='icon icon-delete'>")));
             newTile.append(tileAction);
             $(".modal.active").find(".modal-body").prepend(newDivider, newTile);
         }
