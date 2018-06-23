@@ -5,29 +5,59 @@ const db = require("../models");
 
 module.exports = (app) => {
     app.get("/articles", (req, res) => {
-        request("http://flowingdata.com/most-recent/", (err, resp, html) => {
-            const $ = cheerio.load(html);
-            $("#recent-posts .archive-post").each((i, elem) => {
-                const newData = {};
-                newData.headline = $(elem).children("h2").text().trim();
-                newData.url = $(elem).find("h2 a").attr("href");
-                let summary = "";
-                $(elem).find(".entry p").each((j, p) => {
-                    summary += ` ${$(p).text()}`;
+        db.Blog.find({})
+            .then((blogs) => {
+                blogs.forEach((blog) => {
+                    request(blog.articleUrl, (err, resp, html) => {
+                        const $ = cheerio.load(html);
+                        eval(blog.articleSelector).each((i, elem) => {
+                            const newData = {};
+                            newData.headline = eval(blog.headlineSelector);
+                            newData.url = eval(blog.urlSelector);
+                            newData.summary = eval(blog.summarySelector);
+                            newData.blog = blog._id;
+                            db.Article.findOne(newData)
+                                .then((existingDoc) => {
+                                    if (!existingDoc) {
+                                        db.Article.create(newData)
+                                            .then(newArticle => db.Blog.findOneAndUpdate(
+                                                { _id: blog._id },
+                                                { $push: { articles: newArticle._id } },
+                                                { new: true },
+                                            ))
+                                            .then(updatedBlog => res.json(updatedBlog))
+                                            .catch(dbErr => res.json(dbErr));
+                                    }
+                                });
+                        });
+                    });
                 });
-                newData.summary = summary;
-                db.Article.findOne(newData)
-                    .then((existingDoc) => {
-                        if (!existingDoc) {
-                            db.Article.create(newData)
-                                .then(newArticle => console.log(newArticle))
-                                .catch(dbErr => res.json(dbErr));
-                        }
-                    })
-                    .catch(dbErr => res.json(dbErr));
             });
-        });
-        res.send("Done");
+
+        // request("http://susielu.com/", (err, resp, html) => {
+        //     const $ = cheerio.load(html);
+        //     $(".span-grid .activity-post").each((i, elem) => {
+        //         const newData = {};
+        //         newData.headline = $(elem).find(".title h2").text().trim();
+        //         newData.url = $(elem).find("figure a").attr("href");
+        //         newData.summary = $(elem).find(".title").next().children("p")
+        //             .text();
+        //         // newData.summary = $(elem).find(".entry p").map(function () { return $(this).text(); }).get()
+        //             // .join(" ");
+        //         console.log(newData);
+        //         // db.Article.findOne(newData)
+        //         //     .then((existingDoc) => {
+        //         //         if (!existingDoc) {
+        //         //             db.Article.create(newData)
+        //         //                 .then()
+        //         //                 // .then(newArticle => console.log(newArticle))
+        //         //                 .catch(dbErr => res.json(dbErr));
+        //         //         }
+        //         //     })
+        //         //     .catch(dbErr => res.json(dbErr));
+        //     });
+        // });
+        res.redirect("/page?p=1");
     });
 
     app.post("/articles/:id", (req, res) => {

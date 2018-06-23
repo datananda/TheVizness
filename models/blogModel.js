@@ -7,7 +7,10 @@ const BlogSchema = new Schema({
         type: String,
         required: "blog name is required",
     },
-    url: {
+    mainUrl: {
+        type: String,
+    },
+    articleUrl: {
         type: String,
     },
     icon: {

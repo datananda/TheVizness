@@ -12,13 +12,18 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container grid-lg">
         <header class="navbar">
             <section class="navbar-section">
                 <a href="/" class="navbar-brand mr-2">The Vizness</a>
             </section>
             <section class="navbar-section">
-                <a href="/bookmarks" class="btn btn-link"><i class="icon icon-bookmark"></i> Bookmarks</a>
+                <a href="/articles" class="btn btn-link active"><i class="icon icon-refresh"></i> Refresh Articles</a>
+                {{#if bookmarks}}
+                <a href="/bookmarks" id="bookmark-nav" class="btn btn-link active"><i class="icon icon-bookmark"></i> Bookmarks</a>
+                {{else}}
+                <a href="/bookmarks" id="bookmark-nav" class="btn btn-link"><i class="icon icon-bookmark"></i> Bookmarks</a>
+                {{/if}}
             </section>
         </header>
     </div>

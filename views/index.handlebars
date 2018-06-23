@@ -1,20 +1,24 @@
-<div class="container">
+<div class="container grid-lg" id="articles-container" style="display: none">
     <div class="columns">
         {{#each articles}}
-        <div class="column col-sm-12 col-4 article">
+        <div class="column col-sm-12 col-md-6 col-4 article">
             <div class="card my-2">
                 <div class="card-header text-dark">
-                    <a href="{{url}}">
-                        <div class="card-title mb-1">{{headline}}</div>
-                    </a>
+                    <div class="card-title mb-1">
+                        <a href="{{url}}">{{headline}}</a>
+                    </div>
                     <div class="tile tile-centered">
                         <div class="tile-icon">
                             <figure class="avatar">
-                                <img src="https://i1.wp.com/flowingdata.com/wp-content/uploads/2014/10/logo-lone-square-600-5451c585_site_icon.png" alt="YZ">
+                                <a href="{{blog.mainUrl}}">
+                                    <img src="{{blog.icon}}" alt="{{blog.name}} icon">
+                                </a>
                             </figure>
                         </div>
                         <div class="tile-content">
-                            <p class="tile-title">Flowing Data</p>
+                            <p class="tile-title">
+                                <a href="{{blog.mainUrl}}">{{blog.name}}</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -74,7 +78,7 @@
     </div>
     {{#if pagination}}
     <div class="columns">
-        <div class="column">
+        <div class="column pagination-container">
             <ul class="pagination">
                 {{#if pagination.firstPage.isCurrentPage}}
                 <li class="page-item disabled">
@@ -90,9 +94,7 @@
                 <li class="page-item">
                     <a href="/page?p={{pagination.prevPage.id}}">Previous</a>
                 </li>
-                {{/if}}
-                {{#each pagination.pages}}
-                {{#if isCurrentPage}}
+                {{/if}} {{#each pagination.pages}} {{#if isCurrentPage}}
                 <li class="page-item active">
                     <a href="/page?p={{pageNumber}}">{{pageNumber}}</a>
                 </li>
@@ -100,9 +102,7 @@
                 <li class="page-item">
                     <a href="/page?p={{pageNumber}}">{{pageNumber}}</a>
                 </li>
-                {{/if}}
-                {{/each}}
-                {{#if pagination.lastPage.isCurrentPage}}
+                {{/if}} {{/each}} {{#if pagination.lastPage.isCurrentPage}}
                 <li class="page-item disabled">
                     <a href="#">Next</a>
                 </li>

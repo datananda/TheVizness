@@ -16,24 +16,6 @@ $(".bookmark-btn").on("click", function () {
     localStorage.setItem("vizBookmarks", JSON.stringify(vizBookmarks));
 });
 
-// $(".all-bookmarks-btn").on("click", () => {
-    // console.log("clicked");
-    // const data = {
-    //     bookmarks: JSON.parse(localStorage.getItem("vizBookmarks")),
-    // };
-    // $.post({
-    //     url: "/bookmarks",
-    //     data,
-    // }).then((result) => {
-    //     console.log(result);
-    // });
-    // $.get({
-    //     url: "/bookmarks",
-    // }).then((result) => {
-
-    // })
-// });
-
 $(".delete-comment-btn").on("click", function () {
     const articleId = $(this).closest(".modal").data("id");
     const commentId = $(this).data("id");
@@ -79,18 +61,24 @@ $(".submit-comment-btn").on("click", function () {
 $(() => {
     if (!localStorage.getItem("vizBookmarks")) {
         localStorage.setItem("vizBookmarks", JSON.stringify([]));
+    }
+    const vizBookmarks = JSON.parse(localStorage.getItem("vizBookmarks"));
+
+    if ($("#bookmark-nav").hasClass("active")) {
+        $(".bookmark-btn").addClass("btn-primary");
+        $(".article").each(function () {
+            const cardId = $(this).find(".card-footer").data("id");
+            if (!vizBookmarks.includes(cardId)) {
+                $(this).remove();
+            }
+        }).promise()
+            .done(() => {
+                $("#articles-container").show();
+            });
     } else {
-        const vizBookmarks = JSON.parse(localStorage.getItem("vizBookmarks"));
         vizBookmarks.forEach((articleId) => {
             $(`.card-footer[data-id='${articleId}']`).children(".bookmark-btn").addClass("btn-primary");
         });
+        $("#articles-container").show(); // TODO: ideally this would execute only after foreach complete
     }
-
-    const vizBookmarks = JSON.parse(localStorage.getItem("vizBookmarks"));
-    $(".article").each(function () {
-        const cardId = $(this).find(".card-footer").data("id");
-        if (!vizBookmarks.includes(cardId)) {
-            $(this).remove();
-        }
-    });
 });

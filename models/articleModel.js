@@ -13,6 +13,10 @@ const ArticleSchema = new Schema({
     url: {
         type: String,
     },
+    blog: {
+        type: Schema.Types.ObjectId, 
+        ref: "Blog",
+    },
     comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment",

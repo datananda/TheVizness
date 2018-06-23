@@ -1,0 +1,32 @@
+[
+    {
+        "name": "FlowingData",
+        "mainUrl": "http://flowingdata.com/",
+        "articleUrl": "http://flowingdata.com/most-recent/",
+        "icon": "https://i1.wp.com/flowingdata.com/wp-content/uploads/2014/10/logo-lone-square-600-5451c585_site_icon.png",
+        "articleSelector": "$('#recent-posts .archive-post')",
+        "headlineSelector": "$(elem).children('h2').text().trim()",
+        "urlSelector": "$(elem).find('h2 a').attr('href')",
+        "summarySelector": "$(elem).find('.entry p').map(function () { return $(this).text(); }).get().join(' ')"
+    },
+    {
+        "name": "EagerEyes",
+        "mainUrl": "https://eagereyes.org/",
+        "articleUrl": "https://eagereyes.org/articles",
+        "icon": "https://pbs.twimg.com/profile_images/779905419569274880/0do6JGBj_400x400.jpg",
+        "articleSelector": "$('#genesis-content .post')",
+        "headlineSelector": "$(elem).find('.entry-title-link').text().trim()",
+        "urlSelector": "$(elem).find('.entry-title-link').attr('href')",
+        "summarySelector": "$(elem).find('.entry-content p').text().split('[Read more...]')[0]"
+    },
+    {
+        "name": "Susie Lu",
+        "mainUrl": "http://susielu.com/",
+        "articleUrl": "http://susielu.com/",
+        "icon": "http://susielu.com/assets/images/logo.png",
+        "articleSelector": "$('.span-grid .activity-post')",
+        "headlineSelector": "$(elem).find('.title h2').text().trim()",
+        "urlSelector": "$(elem).find('figure a').attr('href')",
+        "summarySelector": "$(elem).find('.title').next().children('p').text()"
+    }
+]
