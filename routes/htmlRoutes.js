@@ -39,6 +39,7 @@ module.exports = (app) => {
                 res.render("index", {
                     articles,
                     bookmarks: true,
+                    currentPage: "/bookmarks",
                 });
             })
             .catch(dbErr => res.json(dbErr));
@@ -85,6 +86,7 @@ module.exports = (app) => {
                     res.render("index", {
                         articles,
                         pagination,
+                        currentPage: `/page?p=${page}`,
                     });
                 }))
             .catch(dbErr => res.json(dbErr));
