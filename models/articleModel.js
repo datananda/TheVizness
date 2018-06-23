@@ -14,7 +14,7 @@ const ArticleSchema = new Schema({
         type: String,
     },
     blog: {
-        type: Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId,
         ref: "Blog",
     },
     comments: [{

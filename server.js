@@ -16,7 +16,9 @@ app.set("view engine", "handlebars");
 require("./routes/htmlRoutes.js")(app);
 require("./routes/apiRoutes.js")(app);
 
-mongoose.connect("mongodb://localhost/MongoNews");
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MongoNews";
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

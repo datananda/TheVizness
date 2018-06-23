@@ -33,30 +33,6 @@ module.exports = (app) => {
                     });
                 });
             });
-
-        // request("http://susielu.com/", (err, resp, html) => {
-        //     const $ = cheerio.load(html);
-        //     $(".span-grid .activity-post").each((i, elem) => {
-        //         const newData = {};
-        //         newData.headline = $(elem).find(".title h2").text().trim();
-        //         newData.url = $(elem).find("figure a").attr("href");
-        //         newData.summary = $(elem).find(".title").next().children("p")
-        //             .text();
-        //         // newData.summary = $(elem).find(".entry p").map(function () { return $(this).text(); }).get()
-        //             // .join(" ");
-        //         console.log(newData);
-        //         // db.Article.findOne(newData)
-        //         //     .then((existingDoc) => {
-        //         //         if (!existingDoc) {
-        //         //             db.Article.create(newData)
-        //         //                 .then()
-        //         //                 // .then(newArticle => console.log(newArticle))
-        //         //                 .catch(dbErr => res.json(dbErr));
-        //         //         }
-        //         //     })
-        //         //     .catch(dbErr => res.json(dbErr));
-        //     });
-        // });
         res.redirect("/page?p=1");
     });
 
